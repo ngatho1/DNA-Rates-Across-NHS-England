@@ -80,16 +80,6 @@ nhs_dna_dashboard.html
 
 ---
 
-## Getting started
-
-1. Install [DB Browser for SQLite](https://sqlitebrowser.org/)
-2. Open `GP DNA.db`
-3. Run **Step 1** of `GP DNA SQL Queries.md.sql` to create the raw table schemas
-4. Import each CSV via *File > Import > Table from CSV*, naming tables exactly as shown in Step 1
-5. Run Steps 2–8 in order
-
----
-
 ## Data sources
 
 - [NHS England GP Appointments in General Practice](https://digital.nhs.uk/data-and-information/publications/statistical/appointments-in-general-practice) — national overview and PCN granular datasets
