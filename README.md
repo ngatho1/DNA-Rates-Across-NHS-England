@@ -24,8 +24,8 @@ A second counterintuitive result: the least deprived areas (IMD bands 9–10) sh
 
 ## What's Included
 
-**Live dashboard:** [View interactive analysis](./outputs/nhs_dna_dashboard.html)  
-**Case study:** [Read detailed methodology and findings](./outputs/GP%20DNA%20Portfolio%20Case%20Study.docx)  
+**Live dashboard:** [View interactive analysis](https://ngatho1.github.io/DNA-Rates-Across-NHS-England/outputs/nhs_dna_dashboard.html)  
+**Case study:** [Read detailed methodology and findings](./outputs/GP%20DNA%20Portfolio%20Case%20Study.pdf)  
 **Data pipeline:** [Reproducible SQL analysis](./GP%20DNA%20SQL%20Queries.sql)
 
 ### `GP DNA.db`
