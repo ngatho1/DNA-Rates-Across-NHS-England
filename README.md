@@ -4,29 +4,35 @@
 **Project title:** The GP Appointment Squeeze  
 **Tool:** SQLite (DB Browser for SQLite)
 
-## The Problem
+## The problem
 
-NHS GP Did Not Attend (DNA) rates have climbed sharply post-pandemic, costing the NHS an estimated £1B annually and disrupting appointment access. Understanding *where* rates are highest and *why* is critical for targeted resource planning—yet current public data lacks the detailed geographic and demographic breakdown needed for intervention.
+NHS England estimates missed GP appointments cost over £1 billion a year, with Did Not Attend (DNA) rates running above 5% nationally. Most commentary on this assumes deprivation and lack of access drive the problem. This analysis tests that assumption against 200,000+ appointment records across 96 Sub-ICB locations and 7 NHS regions (July 2022 - December 2024), and finds it doesn't hold.
 
-## This Analysis
+Three questions structure the analysis:
 
-This project answers three critical questions across 200,000+ appointment records spanning 96 Sub-ICB locations and 7 NHS regions, July 2022 to December 2024:
+1. Where are DNA rates highest, and is the variation structural or random?
+2. Does appointment mode (face-to-face, telephone, video/online) affect attendance?
+3. Does area-level deprivation predict DNA rates?
 
-1. **Where are DNA rates highest?** — Regional and Sub-ICB league table to identify hotspots
-2. **How has appointment mode shifted?** — Trend analysis of face-to-face vs telephone vs online capacity choices
-3. **Is there an inequality pattern?** — DNA risk by deprivation decile (IMD 2019) to reveal vulnerable populations
+## Key finding
 
-## Key Finding
+Face-to-face appointments have a DNA rate of 10.65%, over five times higher than video/online (1.94%) and nearly double telephone (5.77%), consistently across all seven NHS regions. The likely mechanism is cancellation friction: a remote appointment is easy to quietly ignore, while a face-to-face booking carries enough social commitment that people cancel ahead of time instead of just not showing up.
 
-Face-to-face GP appointments have a DNA rate of 10.65%, over five times higher than video/online appointments (1.94%) and nearly twice the telephone rate (5.77%). This pattern holds consistently across all seven NHS regions. The most plausible explanation is cancellation friction: remote appointments are easier to quietly ignore, while face-to-face bookings carry a stronger social commitment that makes patients more likely to cancel in advance rather than simply not show up. This challenges the common assumption that remote appointments are harder to attend.
+A second result cuts against the access-inequality narrative directly: the least deprived areas (IMD bands 9-10) average a higher DNA rate (7.40%) than the most deprived areas analysed (6.12%). Deprivation alone doesn't predict DNA rates at Sub-ICB level - appointment mode mix and urban density look like stronger drivers than patient demographics.
 
-A second counterintuitive result: the least deprived areas (IMD bands 9–10) show the highest average DNA rate (7.40%), compared to 6.12% in the most deprived areas analysed. Deprivation alone is not a reliable predictor of GP DNA rates at Sub-ICB level, suggesting appointment mode mix and urban density are stronger drivers than patient demographics.
-
-## What's Included
+## What's included
 
 **Live dashboard:** [View interactive analysis](https://ngatho1.github.io/DNA-Rates-Across-NHS-England/outputs/nhs_dna_dashboard.html)  
 **Case study:** [Read detailed methodology and findings](./outputs/GP%20DNA%20Portfolio%20Case%20Study.pdf)  
 **Data pipeline:** [Reproducible SQL analysis](./GP%20DNA%20SQL%20Queries.sql)
+
+## Getting started
+
+1. Install [DB Browser for SQLite](https://sqlitebrowser.org/)
+2. Open `GP DNA.db`
+3. Run **Step 1** of `GP DNA SQL Queries.sql` to create the raw table schemas
+4. Import each CSV via *File > Import > Table from CSV*, naming tables exactly as shown in Step 1
+5. Run Steps 2-8 in order
 
 ### `GP DNA.db`
 The SQLite database containing all raw and cleaned tables. Import the source CSVs (see below) using DB Browser for SQLite before running the SQL queries.
