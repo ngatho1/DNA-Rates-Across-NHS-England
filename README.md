@@ -20,6 +20,8 @@ Face-to-face appointments have a DNA rate of 10.65%, over five times higher than
 
 A second result cuts against the access-inequality narrative directly: the least deprived areas (IMD bands 9-10) average a higher DNA rate (7.40%) than the most deprived areas analysed (6.12%). Deprivation alone doesn't predict DNA rates at Sub-ICB level - appointment mode mix and urban density look like stronger drivers than patient demographics.
 
+At Sub-ICB level, individual rates range from 0% to 32.84%. The high end is driven by a small number of low-volume Sub-ICBs (the 32.84% outlier reflects just 2,966 appointments) and should be read as a flag for local investigation, not a reliable rate. The regional and national figures above are the more stable signal.
+
 ## What's included
 
 **Live dashboard:** [View interactive analysis](https://ngatho1.github.io/DNA-Rates-Across-NHS-England/outputs/nhs_dna_dashboard.html)  
