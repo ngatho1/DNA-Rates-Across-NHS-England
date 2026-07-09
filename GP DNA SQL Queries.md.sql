@@ -1,6 +1,6 @@
 -- =============================================================
 -- PROJECT: The GP Appointment Squeeze
--- Tool:    SQLite — use DB Browser: https://sqlitebrowser.org/
+-- Tool:    SQLite — DB Browser:
 -- Author:  David Kamande
 -- Version: 3 — schema updated to match actual CSV structures
 -- =============================================================
@@ -100,7 +100,6 @@ CREATE TABLE IF NOT EXISTS deprivation_raw (
 
 -- =============================================================
 -- STEP 2: SENSE CHECKS ON RAW DATA
--- Run immediately after each CSV import.
 -- These are diagnostic — they identify what needs fixing
 -- in Step 3 before any analysis is run.
 -- =============================================================
@@ -139,7 +138,7 @@ GROUP BY APPT_STATUS;
 -- 2e. APPT_STATUS values — PCN granular
 --     Expected: 'Attended', 'DNA', 'Booked', 'Unknown'
 --     NOTE: 'Booked' = future appointments with no outcome yet
---     These must be excluded from all DNA rate calculations
+--     These are be excluded from all DNA rate calculations
 SELECT APPT_STATUS, COUNT(*) AS row_count
 FROM pcn_granular_raw
 GROUP BY APPT_STATUS;
@@ -158,7 +157,7 @@ LIMIT 10;
 
 -- 2g. REGION_NAME values — check for UNMAPPED rows
 --     Expected: 7 NHS regions + 'UNMAPPED'
---     UNMAPPED rows have no geographic identity and must be excluded
+--     UNMAPPED rows have no geographic identity and are be excluded
 SELECT REGION_NAME, COUNT(*) AS row_count
 FROM pcn_granular_raw
 GROUP BY REGION_NAME
@@ -196,8 +195,8 @@ HAVING COUNT(*) > 1
 LIMIT 10;
 
 -- 2k. Deprivation — missing values and decile range
---     Column names use double quotes — required for names
---     containing spaces and brackets
+
+
 SELECT
     COUNT(*)                                                        AS total_rows,
     SUM(CASE WHEN TRIM(COALESCE("LSOA code (2011)",'')) = ''
@@ -215,8 +214,6 @@ FROM deprivation_raw;
 -- =============================================================
 -- STEP 3: DATA CLEANING
 -- Creates three cleaned tables from the raw imports.
--- Every fix is commented — this forms your methodology notes.
--- Run once. All analysis in Steps 5–8 uses _clean tables only.
 -- =============================================================
 
 -- -----------------------------------------------------------
@@ -415,7 +412,7 @@ WHERE TRIM(COALESCE(LSOA_CODE,'')) != '';
 -- =============================================================
 -- STEP 4: POST-CLEANING SENSE CHECKS
 -- Confirm every issue from Step 2 has been resolved.
--- Also produces the cleaning audit log for your write-up.
+
 -- =============================================================
 
 -- 4a. Raw vs clean row counts
@@ -460,7 +457,7 @@ FROM pcn_granular_clean
 GROUP BY APPOINTMENT_MODE;
 
 -- 4f. Confirm date conversion worked — both tables
---     Dates should now sort chronologically as text
+--     Dates is now chronologically as text
 SELECT 'national_overview' AS source,
     MIN(APPOINTMENT_MONTH) AS earliest,
     MAX(APPOINTMENT_MONTH) AS latest,
@@ -487,7 +484,7 @@ FROM deprivation_clean
 GROUP BY IMD_DECILE
 ORDER BY IMD_DECILE;
 
--- 4i. Cleaning audit log — paste into methodology section
+-- 4i. Cleaning audit log 
 SELECT 'National Overview: zero-count rows removed'         AS cleaning_action,
     (SELECT COUNT(*) FROM national_overview_raw)
     - (SELECT COUNT(*) FROM national_overview_clean)        AS records_affected
@@ -514,11 +511,11 @@ SELECT 'Deprivation: rows without LSOA code excluded',
 -- STEP 5: ANALYSIS — Q1: WHERE ARE DNA RATES HIGHEST?
 -- Source: pcn_granular_clean
 -- 'Unknown' status excluded from all DNA rate denominators.
--- This is consistent throughout Steps 5–7 and documented in 4i.
+
 -- =============================================================
 
 -- 5a. National DNA rate baseline from PCN data
---     Use this as the benchmark figure in your write-up
+     
 SELECT
     APPOINTMENT_STATUS,
     SUM(COUNT_OF_APPOINTMENTS)                              AS total_appointments,
@@ -609,7 +606,7 @@ FROM (
 -- =============================================================
 
 -- 6a. National DNA trend over time — from national overview
---     30 months; use this for the main trend line chart
+--     30 months; 
 SELECT
     APPOINTMENT_MONTH,
     ROUND(
@@ -694,9 +691,8 @@ ORDER BY REGION_NAME, APPOINTMENT_MODE;
 -- The join works by aggregating deprivation to Local Authority
 -- (LA) level, then matching LA district codes to the Sub-ICB
 -- area name using a partial text match on LA_DISTRICT_NAME.
--- This is an approximation — document it in your methodology.
--- A cleaner join would use an LSOA-to-Sub-ICB lookup table,
--- which NHS England publishes separately if needed.
+-- This is an approximation 
+-- 
 -- =============================================================
 
 -- 7a. Reusable view: DNA rate per Sub-ICB
@@ -790,16 +786,15 @@ ORDER BY MIN(dep.avg_imd_decile);
 
 
 -- =============================================================
--- STEP 8: EXPORT QUERIES FOR EXCEL
--- Run each query, then right-click results > Export as CSV
--- Each feeds a specific chart type in your dashboard.
+-- STEP 8: EXPORT QUERIES FOR DASHBOARD
+
 -- =============================================================
 
 -- EXPORT A: National DNA trend line (30 months) → Line chart
---           Run query 6a and export
+--           Run query 6a 
 
 -- EXPORT B: Mode mix over time → Stacked area chart
---           Run query 6b and export
+--           Run query 6b 
 
 -- EXPORT C: DNA rate by mode → Horizontal bar chart
 SELECT APPOINTMENT_MODE, dna_rate_pct
@@ -820,13 +815,13 @@ FROM (
 ORDER BY dna_rate_pct DESC;
 
 -- EXPORT D: Regional DNA rates → Bar chart
---           Run query 5b and export
+--           Run query 5b 
 
 -- EXPORT E: Sub-ICB league table → Ranked table in Excel
---           Run query 5c and export
+--           Run query 5c 
 
 -- EXPORT F: Deprivation band vs DNA rate → Column chart
---           Run query 7d and export
+--           Run query 7d 
 
 -- EXPORT G: Mode vs DNA rate by region → Clustered bar chart
---           Run query 6d and export
+--           Run query 6d 
