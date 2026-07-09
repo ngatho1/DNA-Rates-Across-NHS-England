@@ -1,6 +1,10 @@
 -- =============================================================
 -- PROJECT: The GP Appointment Squeeze
+<<<<<<< HEAD:GP DNA SQL Queries.md.sql
 -- Tool:    SQLite — DB Browser:
+=======
+-- Tool:    SQLite — DB Browser
+>>>>>>> 1f20bb3c904a0e919e016e6bc7956d8f14d04397:GP DNA SQL Queries.sql
 -- Author:  David Kamande
 -- Version: 3 — schema updated to match actual CSV structures
 -- =============================================================

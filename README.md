@@ -4,17 +4,37 @@
 **Project title:** The GP Appointment Squeeze  
 **Tool:** SQLite (DB Browser for SQLite)
 
-## Overview
+## The problem
 
-This project analyses Did Not Attend (DNA) rates for GP appointments across NHS England, covering July 2022 – December 2024. It investigates three questions:
+NHS England estimates missed GP appointments cost over £1 billion a year, with Did Not Attend (DNA) rates running above 5% nationally. Most commentary on this assumes deprivation and lack of access drive the problem. This analysis tests that assumption against 200,000+ appointment records across 96 Sub-ICB locations and 7 NHS regions (July 2022 - December 2024), and finds it doesn't hold.
 
-1. **Where are DNA rates highest?** — regional and Sub-ICB breakdown
-2. **How has appointment mode shifted?** — face-to-face vs telephone vs online trend
-3. **Is there an inequality pattern?** — DNA rates by deprivation decile (IMD 2019)
+Three questions structure the analysis:
 
----
+1. Where are DNA rates highest, and is the variation structural or random?
+2. Does appointment mode (face-to-face, telephone, video/online) affect attendance?
+3. Does area-level deprivation predict DNA rates?
 
-## Files
+## Key finding
+
+Face-to-face appointments have a DNA rate of 10.65%, over five times higher than video/online (1.94%) and nearly double telephone (5.77%), consistently across all seven NHS regions. The likely mechanism is cancellation friction: a remote appointment is easy to quietly ignore, while a face-to-face booking carries enough social commitment that people cancel ahead of time instead of just not showing up.
+
+A second result cuts against the access-inequality narrative directly: the least deprived areas (IMD bands 9-10) average a higher DNA rate (7.40%) than the most deprived areas analysed (6.12%). Deprivation alone doesn't predict DNA rates at Sub-ICB level - appointment mode mix and urban density look like stronger drivers than patient demographics.
+
+At Sub-ICB level, individual rates range from 0% to 32.84%. The high end is driven by a small number of low-volume Sub-ICBs (the 32.84% outlier reflects just 2,966 appointments) and should be read as a flag for local investigation, not a reliable rate. The regional and national figures above are the more stable signal.
+
+## What's included
+
+**Live dashboard:** [View interactive analysis](https://ngatho1.github.io/DNA-Rates-Across-NHS-England/outputs/nhs_dna_dashboard.html)  
+**Case study:** [Read detailed methodology and findings](./outputs/GP%20DNA%20Portfolio%20Case%20Study.pdf)  
+**Data pipeline:** [Reproducible SQL analysis](./GP%20DNA%20SQL%20Queries.sql)
+
+## Getting started
+
+1. Install [DB Browser for SQLite](https://sqlitebrowser.org/)
+2. Open `GP DNA.db`
+3. Run **Step 1** of `GP DNA SQL Queries.sql` to create the raw table schemas
+4. Import each CSV via *File > Import > Table from CSV*, naming tables exactly as shown in Step 1
+5. Run Steps 2-8 in order
 
 ### `GP DNA.db`
 The SQLite database containing all raw and cleaned tables. Import the source CSVs (see below) using DB Browser for SQLite before running the SQL queries.
